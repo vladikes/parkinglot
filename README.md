@@ -8,6 +8,7 @@ Run pip3 install -r requirements.txt (Python 3) to install the Pytest package.
 
 ## Usage
 See main.py for an example
+Run Pytest in the command line in order to execute tests
 
 ```python
 from parking_lot import ParkingLot
