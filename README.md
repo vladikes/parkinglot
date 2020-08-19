@@ -12,15 +12,13 @@ Run Pytest in the command line in order to execute tests
 
 ```python
 from parking_lot import ParkingLot
-from car import Car
+from logentry import cars
 
-car.Car(
-           action_type={'Type': 'ENTER'},
-           car_id=10,
-           utc_enter_timestamp=entrance_time,
-           utc_exit_timestamp=exit_time), # returns a car dataclass
+def main():
+    parking_lot = ParkingLot()
+    cars_parked = parking_lot.calculate_num_of_cars_duration(cars)
+    for i in cars_parked:
+        print(i)
 
-ParkingLot().park_car([Car(...)]) # Accepts a list of Cars
-ParkingLot().get_vehicles # returns vehicles parked in the lot
-ParkingLot().calculate_num_of_cars_duration(vehicles) # returnsa dict with vehicles parked over 2 hours including the cars themselves
+ParkingLot().calculate_num_of_cars_duration(vehicles) # returns a generator with vehicles parked over 2 hours including the cars themselves
 ```

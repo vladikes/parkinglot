@@ -1,13 +1,9 @@
 from dataclasses import dataclass, field
 import datetime
-from car import Car
-import random
 
 
 @dataclass
 class ParkingLot:
-    lot = []
-
     @staticmethod
     def is_open(
         opening_time='06:00:00',
@@ -23,25 +19,25 @@ class ParkingLot:
             print(f'parking lot is closed {current_time}')
             return False
 
-    def park_car(self, vehicles: list):
-        if self.is_open():
-            for vehicle in vehicles:
-                self.lot.append(vehicle)
-
     @staticmethod
     def calculate_num_of_cars_duration(vehicles):
-        list_of_cars = []
-
         for vehicle in vehicles:
-            elapsed_time = vehicle.utc_exit_timestamp.hour - vehicle.utc_enter_timestamp.hour
+            elapsed_time = datetime.datetime.strptime(
+                vehicle['utc_exit_date'],
+                '%Y-%m-%d %H:%M:%S.%f').hour - datetime.datetime.strptime(
+                vehicle['utc_entry_date'],
+                '%Y-%m-%d %H:%M:%S.%f'
+            ).hour
+
             if elapsed_time > 2:
-                list_of_cars.append(vehicle)
 
-        return {'Number of cars': len(list_of_cars), 'list of cars': list_of_cars}
-
-    def get_vehicles(self):
-        return self.lot
-
+                yield {
+                    'car_id': vehicle['_id'],
+                    'action_type': vehicle['action type'],
+                    'hours_parked': elapsed_time,
+                    'entry_time': vehicle['utc_entry_date'],
+                    'exit_time': vehicle['utc_exit_date'],
+                }
 
 
 
