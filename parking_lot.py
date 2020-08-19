@@ -19,25 +19,25 @@ class ParkingLot:
             print(f'parking lot is closed {current_time}')
             return False
 
-    @staticmethod
-    def calculate_num_of_cars_duration(vehicles):
-        for vehicle in vehicles:
-            elapsed_time = datetime.datetime.strptime(
-                vehicle['utc_exit_date'],
-                '%Y-%m-%d %H:%M:%S.%f').hour - datetime.datetime.strptime(
-                vehicle['utc_entry_date'],
-                '%Y-%m-%d %H:%M:%S.%f'
-            ).hour
+    def calculate_num_of_cars_duration(self, vehicles):
+        if self.is_open():
+            for vehicle in vehicles:
+                elapsed_time = datetime.datetime.strptime(
+                    vehicle['utc_exit_date'],
+                    '%Y-%m-%d %H:%M:%S.%f').hour - datetime.datetime.strptime(
+                    vehicle['utc_entry_date'],
+                    '%Y-%m-%d %H:%M:%S.%f'
+                ).hour
 
-            if elapsed_time > 2:
+                if elapsed_time > 2:
 
-                yield {
-                    'car_id': vehicle['_id'],
-                    'action_type': vehicle['action type'],
-                    'hours_parked': elapsed_time,
-                    'entry_time': vehicle['utc_entry_date'],
-                    'exit_time': vehicle['utc_exit_date'],
-                }
+                    yield {
+                        'car_id': vehicle['_id'],
+                        'action_type': vehicle['action type'],
+                        'hours_parked': elapsed_time,
+                        'entry_time': vehicle['utc_entry_date'],
+                        'exit_time': vehicle['utc_exit_date'],
+                    }
 
 
 
